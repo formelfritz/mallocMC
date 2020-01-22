@@ -30,6 +30,7 @@ if(NOT DEFINED COMPUTE_CAPABILITY)
     endif()
 endif()
 set(CUDA_NVCC_FLAGS "-arch=sm_${COMPUTE_CAPABILITY};-use_fast_math;")
+# set(CUDA_NVCC_FLAGS "-use_fast_math;")
 set(CUDA_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CUDA_INCLUDE_DIRS})
 cuda_include_directories(${CUDA_INCLUDE_DIRS})
@@ -119,3 +120,29 @@ target_link_libraries(mallocMC_Example01 ${LIBS})
 target_link_libraries(mallocMC_Example02 ${LIBS})
 target_link_libraries(mallocMC_Example03 ${LIBS})
 target_link_libraries(VerifyHeap ${LIBS})
+
+###############################################################################
+# Performance Tests
+###############################################################################
+add_custom_target(performanceTests DEPENDS ptest1 ptest2)
+
+cuda_add_executable(ptest1
+                    EXCLUDE_FROM_ALL
+                    performanceTests/ptest.cu)
+
+cuda_add_executable(ptest2
+                    EXCLUDE_FROM_ALL
+                    performanceTests/ptest.cu)
+
+cuda_add_executable(ptest3
+                    EXCLUDE_FROM_ALL
+                    performanceTests/ptest.cu)
+
+set_target_properties (ptest1 PROPERTIES COMPILE_DEFINITIONS "MC_CONFIG_ID=1")
+set_target_properties (ptest2 PROPERTIES COMPILE_DEFINITIONS "MC_CONFIG_ID=2")
+set_target_properties (ptest3 PROPERTIES COMPILE_DEFINITIONS "MC_CONFIG_ID=3")
+
+target_link_libraries(ptest1 ${LIBS})
+target_link_libraries(ptest2 ${LIBS})
+target_link_libraries(ptest3 ${LIBS})
+
