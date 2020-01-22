@@ -124,7 +124,7 @@ target_link_libraries(VerifyHeap ${LIBS})
 ###############################################################################
 # Performance Tests
 ###############################################################################
-add_custom_target(performanceTests DEPENDS ptest1 ptest2)
+add_custom_target(performanceTests DEPENDS ptest1 ptest2 ptest3)
 
 cuda_add_executable(ptest1
                     EXCLUDE_FROM_ALL
