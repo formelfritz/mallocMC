@@ -7,6 +7,6 @@ Graphik: Quadro K2000/PCIe/SSE2
 Taurus:
 
 Speicher: ???
-Prozessor: ???
-Graphik: Kepler K20X
+Prozessor: Xenon (R) E5 - 2450 0 @ 2.1GHZ x 8 x 2
+Graphik: Kepler K20Xm
 
