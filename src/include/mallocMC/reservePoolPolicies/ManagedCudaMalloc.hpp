@@ -1,12 +1,10 @@
 /*
   mallocMC: Memory Allocator for Many Core Architectures.
-  https://www.hzdr.de/crp
 
   Copyright 2020 Institute of Radiation Physics,
                  Helmholtz-Zentrum Dresden - Rossendorf
 
-  Author(s):  Carlchristian Eckert - c.eckert ( at ) hzdr.de
-              Martin Thuemmler
+  Author(s):  Martin Thuemmler
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -29,11 +27,18 @@
 
 #pragma once
 
-#include "reservePoolPolicies/SimpleCudaMalloc.hpp"
-#include "reservePoolPolicies/SimpleCudaMalloc_impl.hpp"
+namespace mallocMC{
+namespace ReservePoolPolicies{
 
-#include "reservePoolPolicies/ManagedCudaMalloc.hpp"
-#include "reservePoolPolicies/ManagedCudaMalloc_impl.hpp"
+  /**
+   * @brief creates/allocates a managed memory pool on the accelerator
+   *
+   * This ReservePoolPolicy will create a memory pool of a fixed size on the
+   * accelerator by using a host-side call to cudaMalloc(). The pool is later
+   * freed through cudaFree(). This can only be used with accelerators that
+   * support CUDA and compute capability 3.0 or higher.
+   */
+  struct ManagedCudaMalloc;
 
-#include "reservePoolPolicies/CudaSetLimits.hpp"
-#include "reservePoolPolicies/CudaSetLimits_impl.hpp"
+} //namespace ReservePoolPolicies
+} //namespace mallocMC

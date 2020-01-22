@@ -1,12 +1,10 @@
 /*
   mallocMC: Memory Allocator for Many Core Architectures.
-  https://www.hzdr.de/crp
 
   Copyright 2020 Institute of Radiation Physics,
                  Helmholtz-Zentrum Dresden - Rossendorf
 
-  Author(s):  Carlchristian Eckert - c.eckert ( at ) hzdr.de
-              Martin Thuemmler
+  Author(s):  Martin Thuemmler
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -29,11 +27,32 @@
 
 #pragma once
 
-#include "reservePoolPolicies/SimpleCudaMalloc.hpp"
-#include "reservePoolPolicies/SimpleCudaMalloc_impl.hpp"
+#include <string>
 
-#include "reservePoolPolicies/ManagedCudaMalloc.hpp"
-#include "reservePoolPolicies/ManagedCudaMalloc_impl.hpp"
+#include "../mallocMC_utils.hpp"
 
-#include "reservePoolPolicies/CudaSetLimits.hpp"
-#include "reservePoolPolicies/CudaSetLimits_impl.hpp"
+#include "ManagedCudaMalloc.hpp"
+
+namespace mallocMC{
+namespace ReservePoolPolicies{
+
+  struct ManagedCudaMalloc{
+    static void* setMemPool(size_t memsize){
+      void* pool = NULL;
+      MALLOCMC_CUDA_CHECKED_CALL(cudaMallocManaged(&pool, memsize));
+      return pool;
+    }
+
+    static void resetMemPool(void* p){
+      MALLOCMC_CUDA_CHECKED_CALL(cudaFree(p));
+      MALLOCMC_CUDA_CHECKED_CALL(cudaDeviceSynchronize());
+    }
+
+    static std::string classname(){
+      return "ManagedCudaMalloc";
+    }
+
+  };
+
+} //namespace ReservePoolPolicies
+} //namespace mallocMC
