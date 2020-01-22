@@ -1,0 +1,12 @@
+Pool:
+
+Speicher: 7,6 GiB
+Prozessor: Intel® Core™ i5-6500 CPU @ 3.20GHz × 4
+Graphik: Quadro K2000/PCIe/SSE2
+
+Taurus:
+
+Speicher: ???
+Prozessor: ???
+Graphik: Kepler K20X
+
